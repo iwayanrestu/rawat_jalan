@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pendaftaran Rawat Jalan</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
+  </head>
+  <body>
+    <header>
+      <h1>Pendaftaran Rawat Jalan</h1>
+    </header>
+
+    <main>
+      <section class="analyze-section">
+        <h2>Analisis Gejala</h2>
+        <input type="text" id="symptom" placeholder="Masukkan gejala Anda" />
+        <button class="btn-form" onclick="analyzeSymptoms()">
+          Cari Spesialis
+        </button>
+        <p id="specialist-result"></p>
+      </section>
+
+      <section class="register-section">
+        <h2>Pendaftaran</h2>
+        <label for="namaPasien">Nama Pasien:</label>
+        <input type="text" id="namaPasien" placeholder="Masukkan nama Anda" />
+
+        <label for="doctorList">Pilih Dokter:</label>
+        <select id="doctorList">
+          <option value="">Pilih spesialis terlebih dahulu</option>
+        </select>
+
+        <button class="btn-form" onclick="register()">Daftar</button>
+      </section>
+      <a href="listDaftar.html" class="btn-cta">Lihat Pendaftaran</a>
+    </main>
+
+    <footer>
+      <p>&copy; 2025 Pendaftaran Rawat Jalan</p>
+    </footer>
+
+    <!-- Chat Icon -->
+    <div class="chat-icon" onclick="toggleChat()">
+      <i class="fas fa-comments"></i>
+    </div>
+
+    <!-- Chat Box -->
+    <div class="chat-box" id="chatBox">
+      <div class="chat-box-header">Live Chat</div>
+      <div class="chat-box-messages" id="chatMessages"></div>
+      <div class="chat-box-footer">
+        <input type="text" id="chatInput" placeholder="Ketik pesan..." />
+        <button onclick="sendMessage()">
+          <i class="fas fa-paper-plane"></i>
+        </button>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script
+      src="https://kit.fontawesome.com/a076d05399.js"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

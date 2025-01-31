@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Daftar Pendaftaran</title>
+    <!-- Menyertakan CSS Bootstrap -->
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      a {
+        display: inline-block;
+        width: 100px;
+        padding: 10px;
+        margin-top: 20px;
+        background-color: #0056b3;
+        color: #fff;
+        text-align: center;
+        text-decoration: none;
+        border-radius: 5px;
+        font-size: 1rem;
+        border: none;
+      }
+      a:hover {
+        background-color: #003d80;
+        text-decoration: none;
+        color: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container mt-5">
+      <h2>Daftar Pendaftaran Pasien</h2>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nama Pasien</th>
+            <th scope="col">Spesialisasi</th>
+            <th scope="col">Jadwal</th>
+            <th scope="col">Status</th>
+            <th scope="col">Aksi</th>
+            <!-- Kolom untuk tombol aksi -->
+          </tr>
+        </thead>
+        <tbody id="pendaftaranList">
+          <!-- Data pendaftaran akan muncul di sini -->
+        </tbody>
+      </table>
+      <button
+        class="btn btn-success"
+        id="tombol-selesai"
+        style="display: none"
+        onclick="markAsDone()"
+      >
+        Selesai
+      </button>
+      <a href="home.html">Kembali</a>
+    </div>
+
+    <!-- Menyertakan JavaScript Bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- Skrip untuk mengambil dan menampilkan data pendaftaran -->
+    <script>
+      let selectedPendaftaranId = null; // Menyimpan id pendaftaran yang dipilih
+
+      async function getPendaftaran() {
+        try {
+          const response = await fetch("http://localhost:3000/pendaftaran");
+          const data = await response.json();
+
+          const tableBody = document.getElementById("pendaftaranList");
+          tableBody.innerHTML = ""; // Kosongkan tabel sebelumnya
+
+          data.forEach((pendaftaran, index) => {
+            const row = document.createElement("tr");
+            row.setAttribute("data-id", pendaftaran.id); // Tambahkan atribut data-id
+            row.innerHTML = `
+        <td>${index + 1}</td>
+        <td>${pendaftaran.nama_pasien}</td>
+        <td>${pendaftaran.spesialisasi}</td>
+        <td>${pendaftaran.jadwal}</td>
+        <td>${pendaftaran.status}</td>
+        <td>
+          ${
+            pendaftaran.status !== "selesai"
+              ? `<button class="btn btn-success" onclick="markAsDone(${pendaftaran.id})">
+                  Selesai
+                </button>`
+              : ""
+          }
+        </td>
+      `;
+            tableBody.appendChild(row);
+          });
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        }
+      }
+
+      function setDone(id) {
+        // Menyimpan ID pendaftaran yang dipilih
+        selectedPendaftaranId = id;
+
+        // Menampilkan tombol "Selesai"
+        document.getElementById("tombol-selesai").style.display = "block";
+      }
+
+      async function markAsDone(id) {
+        const confirmAction = confirm(
+          "Apakah Anda yakin ingin menyelesaikan rawat jalan ini?"
+        );
+        if (!confirmAction) return;
+
+        try {
+          const response = await fetch(
+            `http://localhost:3000/pendaftaran/${id}/selesai`,
+            {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+
+          if (response.ok) {
+            alert("Rawat jalan selesai.");
+
+            // Perbarui status di tabel
+            const rowToUpdate = document.querySelector(`tr[data-id="${id}"]`);
+            if (rowToUpdate) {
+              const statusCell = rowToUpdate.children[4]; // Kolom status
+              const actionCell = rowToUpdate.children[5]; // Kolom aksi
+              statusCell.textContent = "selesai"; // Ubah status
+              actionCell.innerHTML = ""; // Hapus tombol "Selesai"
+            }
+          } else {
+            alert("Gagal memperbarui status.");
+          }
+        } catch (error) {
+          console.error("Error updating status:", error);
+          alert("Terjadi kesalahan.");
+        }
+      }
+
+      // Memanggil fungsi untuk menampilkan data saat halaman dimuat
+      window.onload = getPendaftaran;
+    </script>
+  </body>
+</html>

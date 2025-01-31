@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Selamat Datang</title>
+    <!-- Menyertakan CSS Bootstrap -->
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        background: #f8f9fa;
+        font-family: "Arial", sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+      }
+      .container {
+        background: #ffffff;
+        border-radius: 15px;
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        padding: 50px 30px;
+        max-width: 600px;
+        width: 100%;
+      }
+      .container h1 {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: #343a40;
+        margin-bottom: 20px;
+      }
+      .container p {
+        font-size: 1.1rem;
+        color: #6c757d;
+        margin-bottom: 30px;
+      }
+      .btn-start {
+        font-size: 1.2rem;
+        font-weight: bold;
+        padding: 15px 30px;
+        background: #007bff;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        transition: all 0.3s ease-in-out;
+      }
+      .btn-start:hover {
+        background: #0056b3;
+        transform: scale(1.05);
+        color: white;
+        box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2);
+      }
+      .footer {
+        margin-top: 20px;
+        font-size: 0.9rem;
+        color: #adb5bd;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Pendaftaran Rawat Jalan</h1>
+      <p>
+        Nikmati kemudahan dalam mengelola pendaftaran pasien dengan antarmuka
+        yang sederhana dan efisien. Mulailah sekarang!
+      </p>
+      <button class="btn btn-start" onclick="startApp()">Mulai</button>
+      <div class="footer">
+        &copy; 2025 Aplikasi Pendaftaran Rawat Jalan | All Rights Reserved
+      </div>
+    </div>
+
+    <script>
+      function startApp() {
+        // Arahkan ke halaman berikutnya (ganti URL sesuai kebutuhan)
+        window.location.href = "home.html";
+      }
+    </script>
+  </body>
+</html>
